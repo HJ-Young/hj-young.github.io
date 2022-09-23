@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>yhj&#39;s blog</title>
+  
+  
+  <link href="https://hj-young.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://hj-young.github.io/"/>
+  <updated>2022-09-23T08:06:30.096Z</updated>
+  <id>https://hj-young.github.io/</id>
+  
+  <author>
+    <name>HaoJin Yang</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>云计算第一次作业测试</title>
+    <link href="https://hj-young.github.io/2022/09/23/Cloud-Computing-Test/"/>
+    <id>https://hj-young.github.io/2022/09/23/Cloud-Computing-Test/</id>
+    <published>2022-09-23T07:49:47.000Z</published>
+    <updated>2022-09-23T08:06:30.096Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;云计算&quot;&gt;&lt;a href=&quot;#云计算&quot; class=&quot;headerlink&quot; title=&quot;云计算&quot;&gt;&lt;/a&gt;云计算&lt;/h1&gt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
