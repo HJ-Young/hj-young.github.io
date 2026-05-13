@@ -58,7 +58,7 @@ cv:
         position: Foundation Algorithm Research Intern
         location: Beijing, China
         start_date: 2025-10
-        end_date: present
+        end_date: 2026-04
         summary: "Advisor: Jingqing Ruan. Post-training of Meituan's in-house Longcat base model to improve persuasion ability in real sales scenarios."
         highlights:
           - "Multi-turn RL framework on VeRL supporting rollouts with simulated users and per-token mask/advantage."
@@ -90,6 +90,11 @@ cv:
       - title: "WavefrontDiffusion: Dynamic Decoding Schedule for Improved Reasoning"
         authors:
           - Haojin Yang
+          - R. Hu
+          - Z. Sun
+          - R. Zhou
+          - Y. Cai
+          - Y. Wang
         publisher: ICLR 2026 (Poster)
         releaseDate: 2026
         summary: "Dynamic wavefront decoding for diffusion LMs; outperforms BlockDiffusion on GSM8K, HumanEval and 3 more benchmarks at the same compute budget."
@@ -97,22 +102,54 @@ cv:
       - title: "Harmonizing Dense and Sparse Signals in Multi-turn RL: Dual-Horizon Credit Assignment for Industrial Sales Agents"
         authors:
           - Haojin Yang
+          - A. Jian
+          - X. Huang
+          - Y. Wang
+          - W. Zhang
+          - K. Zeng
+          - X. Cai
+          - J. Ruan
         publisher: ACL 2026 (Poster)
         releaseDate: 2026
         summary: "DuCA / HIAN: decoupled normalization for turn-level vs. session-level advantages. +6.82% conversion and −82.28% repetition over GRPO."
 
       - title: "Asymmetric On-Policy Distillation: Bridging Exploitation and Imitation at the Token Level"
         authors:
+          - N. Jia
           - Haojin Yang
-          - et al.
+          - X. Ma
+          - J. Lian
+          - S. Zhang
+          - W. Zhang
+          - K. Zeng
+          - X. Cai
+          - Z. Sun
         publisher: EMNLP 2026 (Under Review, co-first author)
         releaseDate: 2026
 
       - title: "VADE: Variance-Aware Dynamic Sampling via Online Sample-Level Difficulty Estimation for Multimodal RL"
+        authors:
+          - Z. Hu
+          - J. Qiu
+          - T. Bai
+          - Haojin Yang
+          - B. Yuan
+          - Q. Jing
+          - C. He
+          - W. Zhang
         publisher: CVPR 2026 (Findings)
         releaseDate: 2026
 
       - title: "TRUST-SQL: Tool-Integrated Multi-Turn Reinforcement Learning for Text-to-SQL over Unknown Schemas"
+        authors:
+          - A. Jian
+          - X. Zhang
+          - W. Du
+          - J. Ruan
+          - J. Pei
+          - W. Zhang
+          - K. Zeng
+          - X. Cai
         publisher: EMNLP 2026 (Under Review)
         releaseDate: 2026
 

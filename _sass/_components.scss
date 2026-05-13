@@ -78,6 +78,31 @@ ul.task-list input[type="checkbox"] {
   margin-right: 1rem;
 }
 
+.about-wrap {
+  gap: 1.5rem;
+
+  .profile {
+    width: 100%;
+  }
+}
+
+@media (min-width: 576px) {
+  .about-wrap {
+    .profile {
+      width: 30%;
+      flex: 0 0 30%;
+    }
+
+    .profile-side-right {
+      order: 2;
+    }
+
+    .profile-side-left {
+      order: 0;
+    }
+  }
+}
+
 @media (min-width: 576px) {
   .profile {
     width: 30%;
