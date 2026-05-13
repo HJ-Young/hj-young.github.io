@@ -1,0 +1,154 @@
+cv:
+  name: Haojin Yang
+  label: M.Eng. student
+  email: yhj@stu.pku.edu.cn
+  phone:
+  url: https://hj-young.github.io
+  location: Beijing, China
+  image: ""
+  summary: M.Eng. student at Peking University. Research on reinforcement learning for large language models — multi-turn agentic RL, credit assignment, diffusion language models.
+
+  social_networks:
+    - network: GitHub
+      username: HJ-Young
+
+  address:
+    street: School of Software & Microelectronics
+    city: Beijing
+    region:
+    postalCode:
+    countryCode: CN
+
+  sections:
+    Education:
+      - institution: Peking University
+        location: Beijing, China
+        url: https://www.ss.pku.edu.cn/
+        area: Software Engineering
+        studyType: M.Eng.
+        start_date: 2024
+        end_date: 2027
+        score: ""
+        highlights:
+          - "Ranked 1/4200 in the comprehensive entrance evaluation"
+          - "PKU Academic Excellence Award"
+
+      - institution: Nanjing University
+        location: Nanjing, China
+        url: https://www.nju.edu.cn/
+        area: Software Engineering
+        studyType: B.Eng.
+        start_date: 2020
+        end_date: 2024
+        highlights:
+          - "National Scholarship (3rd class)"
+
+    Experience:
+      - company: StepFun — Foundation Models
+        position: Agent RL Research Intern
+        location: Beijing, China
+        start_date: 2026-04
+        end_date: present
+        summary: "Advisor: Ruihang Miao. Post-training of Step3.6 / Step4 to improve agentic capability using real production traffic."
+        highlights:
+          - "Built a multi-turn RL framework on VeRL with user-simulator rollouts and token-level masking / advantage estimation."
+          - "Designed turn-level and session-level reward functions (rule-based + generative); reward redesign yielded a 28.1% relative improvement over the initial version."
+
+      - company: Meituan — Longcat Interaction
+        position: Foundation Algorithm Research Intern
+        location: Beijing, China
+        start_date: 2025-10
+        end_date: present
+        summary: "Advisor: Jingqing Ruan. Post-training of Meituan's in-house Longcat base model to improve persuasion ability in real sales scenarios."
+        highlights:
+          - "Multi-turn RL framework on VeRL supporting rollouts with simulated users and per-token mask/advantage."
+          - "Reward design combining turn-level (rule-based) and session-level (generative) signals; +28.1% relative gain over the initial reward."
+
+      - company: Microsoft Research Asia — DKI Excel Research
+        position: Research Intern
+        location: Beijing, China
+        start_date: 2025-04
+        end_date: 2025-10
+        summary: "Advisor: Ran Jia. RLHF, Excel agents, Deep Research."
+        highlights:
+          - "Qwen-32B GRPO training for Python / Formula instruction control in Excel: built multi-turn tool-use pipeline on VeRL with fine-grained rewards, +17% accuracy over GPT-o4-mini."
+          - "Pivot-table dataset: defined a schema covering all operations, built a batched generation pipeline, collected 20k high-quality samples."
+          - "Search benchmark: built a semi-automated pipeline for evaluating large-scale search agents using Wikidata and curated sources with a voting-based validator."
+
+      - company: Baidu — TPG
+        position: LLM Algorithm Intern
+        location: Beijing, China
+        start_date: 2024-09
+        end_date: 2025-03
+        summary: "Advisor: Ziwei Jin. LoRA fine-tuning, GraphRAG, retrieval-augmented systems."
+        highlights:
+          - "Text2Gremlin: LoRA-fine-tuned Qwen2.5-Coder on a curated 60k-from-480k dataset, lifting task accuracy from 70% to 87.2%."
+          - "RAG pipeline: introduced Text2Gremlin + intent classification, compressed QA latency from 9s to 3s in 60% of business scenarios and extended RAG to simple-reasoning queries."
+          - "Proposed a chunk-Graph RAG combining GraphRAG and chunk-RAG for specific business scenarios."
+
+    Selected Publications:
+      - title: "WavefrontDiffusion: Dynamic Decoding Schedule for Improved Reasoning"
+        authors:
+          - Haojin Yang
+        publisher: ICLR 2026 (Poster)
+        releaseDate: 2026
+        summary: "Dynamic wavefront decoding for diffusion LMs; outperforms BlockDiffusion on GSM8K, HumanEval and 3 more benchmarks at the same compute budget."
+
+      - title: "Harmonizing Dense and Sparse Signals in Multi-turn RL: Dual-Horizon Credit Assignment for Industrial Sales Agents"
+        authors:
+          - Haojin Yang
+        publisher: ACL 2026 (Poster)
+        releaseDate: 2026
+        summary: "DuCA / HIAN: decoupled normalization for turn-level vs. session-level advantages. +6.82% conversion and −82.28% repetition over GRPO."
+
+      - title: "Asymmetric On-Policy Distillation: Bridging Exploitation and Imitation at the Token Level"
+        authors:
+          - Haojin Yang
+          - et al.
+        publisher: EMNLP 2026 (Under Review, co-first author)
+        releaseDate: 2026
+
+      - title: "VADE: Variance-Aware Dynamic Sampling via Online Sample-Level Difficulty Estimation for Multimodal RL"
+        publisher: CVPR 2026 (Findings)
+        releaseDate: 2026
+
+      - title: "TRUST-SQL: Tool-Integrated Multi-Turn Reinforcement Learning for Text-to-SQL over Unknown Schemas"
+        publisher: EMNLP 2026 (Under Review)
+        releaseDate: 2026
+
+    Awards:
+      - title: PKU Academic Excellence Award
+        date: 2025
+        awarder: Peking University
+
+      - title: National Scholarship (3rd class)
+        date: 2023
+        awarder: Ministry of Education, China
+
+      - title: PKU SSM Graduate Entrance — Ranked 1/4200
+        date: 2024
+        awarder: Peking University
+        summary: "Initial-exam score 436; ranked 1st in the comprehensive evaluation among ~4200 candidates."
+
+    Skills:
+      - name: Programming
+        level: Proficient
+        icon: fa-solid fa-code
+        keywords: "Python, Java, C++, Shell"
+
+      - name: ML / RL
+        level: Proficient
+        icon: fa-solid fa-brain
+        keywords: "PyTorch, VeRL, GRPO, RLHF, Multi-turn RL, Diffusion LMs, LoRA"
+
+    Languages:
+      - name: Chinese
+        summary: "Native speaker"
+
+      - name: English
+        summary: "CET-6 632 (proficient)"
+
+    Interests:
+      - name: Research interests
+        icon: fa-solid fa-flask
+        keywords: "Reinforcement learning, Multi-turn agentic RL, Diffusion language models, Credit assignment, Tool use"
