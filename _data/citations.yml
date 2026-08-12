@@ -1,12 +1,12 @@
 metadata:
-  last_updated: '2026-08-07'
+  last_updated: '2026-08-12'
 papers:
   wb67LUEAAAAJ:2osOgNQ5qMEC:
-    citations: 6
+    citations: 7
     title: 'Asymmetric on-policy distillation: Bridging exploitation and imitation at the token level'
     year: '2026'
   wb67LUEAAAAJ:9yKSN-GCB0IC:
-    citations: 0
+    citations: 1
     title: 'TRUST-SQL: Tool-Integrated Multi-Turn Reinforcement Learning for Text-to-SQL over Unknown Schemas'
     year: '2026'
   wb67LUEAAAAJ:d1gkVwhDpl0C:
