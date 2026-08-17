@@ -1,8 +1,8 @@
 metadata:
-  last_updated: '2026-08-12'
+  last_updated: '2026-08-17'
 papers:
   wb67LUEAAAAJ:2osOgNQ5qMEC:
-    citations: 7
+    citations: 9
     title: 'Asymmetric on-policy distillation: Bridging exploitation and imitation at the token level'
     year: '2026'
   wb67LUEAAAAJ:9yKSN-GCB0IC:
