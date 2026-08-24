@@ -1,132 +1,142 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Update Google Scholar citation counts on _publications/*.md.
 
-import os
+Queries the author's Scholar profile (site.author.googlescholar in _config.yml)
+for the list of papers and their citedby counts, then fuzzy-matches each entry
+against the frontmatter `title` of the local _publications files. When a match
+is found, the file's frontmatter gets two updated fields:
+
+  citations: <int>              # citedby count reported by Scholar
+  citation_updated: <YYYY-MM-DD> # UTC date the value was refreshed
+
+Files that already have a `citations` field but no longer match Scholar are
+left untouched.
+
+Run locally:
+  pip install scholarly pyyaml
+  python bin/update_scholar_citations.py
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
 import sys
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from difflib import SequenceMatcher
+from pathlib import Path
+
 import yaml
-from datetime import datetime
 from scholarly import scholarly
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+PUBS_DIR = REPO_ROOT / "_publications"
+CONFIG_PATH = REPO_ROOT / "_config.yml"
 
-def load_scholar_user_id() -> str:
-    """Load the Google Scholar user ID from the configuration file."""
-    config_file = "_data/socials.yml"
-    if not os.path.exists(config_file):
-        print(
-            f"Configuration file {config_file} not found. Please ensure the file exists and contains your Google Scholar user ID."
-        )
-        sys.exit(1)
-    try:
-        with open(config_file, "r") as f:
-            config = yaml.safe_load(f)
-        scholar_user_id = config.get("scholar_userid")
-        if not scholar_user_id:
-            print(
-                "No 'scholar_userid' found in the configuration file. Please add 'scholar_userid' to _data/socials.yml."
-            )
-            sys.exit(1)
-        return scholar_user_id
-    except yaml.YAMLError as e:
-        print(
-            f"Error parsing YAML file {config_file}: {e}. Please check the file for correct YAML syntax."
-        )
-        sys.exit(1)
+FRONT_MATTER_RE = re.compile(r"^---\n(.*?)\n---\n(.*)$", re.DOTALL)
 
 
-SCHOLAR_USER_ID: str = load_scholar_user_id()
-OUTPUT_FILE: str = "_data/citations.yml"
+@dataclass
+class Publication:
+    path: Path
+    frontmatter: dict
+    body: str
 
 
-def get_scholar_citations() -> None:
-    """Fetch and update Google Scholar citation data."""
-    print(f"Fetching citations for Google Scholar ID: {SCHOLAR_USER_ID}")
-    today = datetime.now().strftime("%Y-%m-%d")
+def load_publication(path: Path) -> Publication | None:
+    text = path.read_text(encoding="utf-8")
+    match = FRONT_MATTER_RE.match(text)
+    if not match:
+        return None
+    fm = yaml.safe_load(match.group(1)) or {}
+    return Publication(path=path, frontmatter=fm, body=match.group(2))
 
-    # Check if the output file was already updated today
-    if os.path.exists(OUTPUT_FILE):
-        try:
-            with open(OUTPUT_FILE, "r") as f:
-                existing_data = yaml.safe_load(f)
-            if (
-                existing_data
-                and "metadata" in existing_data
-                and "last_updated" in existing_data["metadata"]
-            ):
-                print(f"Last updated on: {existing_data['metadata']['last_updated']}")
-                if existing_data["metadata"]["last_updated"] == today:
-                    print("Citations data is already up-to-date. Skipping fetch.")
-                    return
-        except Exception as e:
-            print(
-                f"Warning: Could not read existing citation data from {OUTPUT_FILE}: {e}. The file may be missing or corrupted."
-            )
 
-    citation_data = {"metadata": {"last_updated": today}, "papers": {}}
+def dump_publication(pub: Publication) -> None:
+    fm_text = yaml.safe_dump(
+        pub.frontmatter, allow_unicode=True, sort_keys=False, default_flow_style=False
+    ).strip()
+    pub.path.write_text(f"---\n{fm_text}\n---\n{pub.body}", encoding="utf-8")
 
-    scholarly.set_timeout(15)
-    scholarly.set_retries(3)
-    try:
-        author = scholarly.search_author_id(SCHOLAR_USER_ID)
-        author_data = scholarly.fill(author)
-    except Exception as e:
-        print(
-            f"Error fetching author data from Google Scholar for user ID '{SCHOLAR_USER_ID}': {e}. Please check your internet connection and Scholar user ID."
-        )
-        sys.exit(1)
 
-    if not author_data:
-        print(
-            f"Could not fetch author data for user ID '{SCHOLAR_USER_ID}'. Please verify the Scholar user ID and try again."
-        )
-        sys.exit(1)
+def scholar_user_id(config_path: Path) -> str:
+    with config_path.open("r", encoding="utf-8") as fp:
+        cfg = yaml.safe_load(fp)
+    url = cfg.get("author", {}).get("googlescholar", "")
+    match = re.search(r"user=([A-Za-z0-9_-]+)", url)
+    if not match:
+        raise SystemExit(f"Could not extract Scholar user id from {url!r}")
+    return match.group(1)
 
-    if "publications" not in author_data:
-        print(f"No publications found in author data for user ID '{SCHOLAR_USER_ID}'.")
-        sys.exit(1)
 
-    for pub in author_data["publications"]:
-        try:
-            pub_id = pub.get("pub_id") or pub.get("author_pub_id")
-            if not pub_id:
-                print(
-                    f"Warning: No ID found for publication: {pub.get('bib', {}).get('title', 'Unknown')}. This publication will be skipped."
-                )
-                continue
+def normalize(title: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", title.lower())
 
-            title = pub.get("bib", {}).get("title", "Unknown Title")
-            year = pub.get("bib", {}).get("pub_year", "Unknown Year")
-            citations = pub.get("num_citations", 0)
 
-            print(f"Found: {title} ({year}) - Citations: {citations}")
+def best_match(target: str, candidates: list[dict]) -> tuple[dict | None, float]:
+    target_norm = normalize(target)
+    best, best_score = None, 0.0
+    for pub in candidates:
+        cand_title = pub.get("bib", {}).get("title", "")
+        score = SequenceMatcher(None, target_norm, normalize(cand_title)).ratio()
+        if score > best_score:
+            best, best_score = pub, score
+    return best, best_score
 
-            citation_data["papers"][pub_id] = {
-                "title": title,
-                "year": year,
-                "citations": citations,
-            }
-        except Exception as e:
-            print(
-                f"Error processing publication '{pub.get('bib', {}).get('title', 'Unknown')}': {e}. This publication will be skipped."
-            )
 
-    # Compare new data with existing data
-    if existing_data and existing_data.get("papers") == citation_data["papers"]:
-        print("No changes in citation data. Skipping file update.")
-        return
+def fetch_scholar_pubs(user_id: str) -> list[dict]:
+    author = scholarly.search_author_id(user_id)
+    filled = scholarly.fill(author, sections=["publications"])
+    return filled.get("publications", [])
 
-    try:
-        with open(OUTPUT_FILE, "w") as f:
-            yaml.dump(citation_data, f, width=1000, sort_keys=True)
-        print(f"Citation data saved to {OUTPUT_FILE}")
-    except Exception as e:
-        print(
-            f"Error writing citation data to {OUTPUT_FILE}: {e}. Please check file permissions and disk space."
-        )
-        sys.exit(1)
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--min-score",
+        type=float,
+        default=0.75,
+        help="Minimum fuzzy match score to accept a Scholar entry (0-1).",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print planned changes without writing files.",
+    )
+    args = parser.parse_args()
+
+    user_id = scholar_user_id(CONFIG_PATH)
+    print(f"Fetching Scholar profile for user {user_id}...", file=sys.stderr)
+    scholar_pubs = fetch_scholar_pubs(user_id)
+    print(f"  {len(scholar_pubs)} Scholar entries retrieved.", file=sys.stderr)
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    updated = 0
+    for path in sorted(PUBS_DIR.glob("*.md")):
+        pub = load_publication(path)
+        if pub is None or "title" not in pub.frontmatter:
+            continue
+        match, score = best_match(str(pub.frontmatter["title"]), scholar_pubs)
+        if match is None or score < args.min_score:
+            print(f"  skip {path.name} (best score {score:.2f})", file=sys.stderr)
+            continue
+        citations = int(match.get("num_citations", 0))
+        prev = pub.frontmatter.get("citations")
+        pub.frontmatter["citations"] = citations
+        pub.frontmatter["citation_updated"] = today
+        if prev == citations and pub.frontmatter.get("citation_updated") == today:
+            continue
+        if args.dry_run:
+            print(f"  would update {path.name}: citations {prev} -> {citations}")
+        else:
+            dump_publication(pub)
+            print(f"  updated {path.name}: citations {prev} -> {citations}")
+        updated += 1
+
+    print(f"{updated} files updated.", file=sys.stderr)
+    return 0
 
 
 if __name__ == "__main__":
-    try:
-        get_scholar_citations()
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        sys.exit(1)
+    raise SystemExit(main())
