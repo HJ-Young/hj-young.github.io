@@ -124,7 +124,7 @@ cv:
           - K. Zeng
           - X. Cai
           - Z. Sun
-        publisher: EMNLP 2026 (Under Review, co-first author)
+        publisher: EMNLP 2026 (Findings, co-first author)
         releaseDate: 2026
 
       - title: "VADE: Variance-Aware Dynamic Sampling via Online Sample-Level Difficulty Estimation for Multimodal RL"
@@ -150,7 +150,7 @@ cv:
           - W. Zhang
           - K. Zeng
           - X. Cai
-        publisher: EMNLP 2026 (Under Review)
+        publisher: EMNLP 2026 (Main)
         releaseDate: 2026
 
     Awards:
