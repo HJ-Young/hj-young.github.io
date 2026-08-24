@@ -31,6 +31,6 @@ I am Haojin Yang (杨昊锦), a M.Eng. student in Software Engineering at [Pekin
 
 My research focuses on **reinforcement learning for large language models** — in particular **multi-turn / agentic RL**, credit assignment under sparse business rewards, and **diffusion language models** with adaptive decoding schedules.
 
-I am currently a research intern at **[StepFun](https://www.stepfun.com/) Foundation Models** (since 2026-04, advised by [Ruihang Miao](#)). Previously, I worked on multi-turn RL for industrial sales agents at **[Meituan Longcat Interaction](https://github.com/meituan-longcat)** (2025-10 to 2026-04, advised by [Jingqing Ruan](#)), on RLHF for Excel agents at **Microsoft Research Asia DKI** (advised by [Ran Jia](#)), and on GraphRAG at **Baidu TPG** (advised by Ziwei Jin).
+I am currently a research intern at **[StepFun](https://www.stepfun.com/) Foundation Models** (since 2026-04, advised by [Ruihang Miao](https://dblp.org/pid/244/7389.html)). Previously, I worked on multi-turn RL for industrial sales agents at **[Meituan Longcat Interaction](https://github.com/meituan-longcat)** (2025-10 to 2026-04, advised by [Jingqing Ruan](https://scholar.google.com/citations?user=L_C8xRkAAAAJ&hl=zh-CN)), on RLHF for Excel agents at **Microsoft Research Asia DKI** (advised by [Ran Jia](https://scholar.google.com/citations?user=yIBo3fgAAAAJ&hl=zh-CN)), and on GraphRAG at **Baidu TPG** (advised by Ziwei Jin).
 
 Feel free to reach out at **yhj [at] stu [dot] pku [dot] edu [dot] cn**.
